@@ -51,7 +51,7 @@ if __name__ == '__main__':
                 if ocupado == 0:
                     print('-----------------------------')
                     print('La impresora llego al tiempo limite de trabajo')
-                    print('El trabajo vuelve a la cola para lugar terminar su impresion')
+                    print('El trabajo vuelve a la cola para luego terminar su impresion')
                     print('-----------------------------')
                     cola.insertar(nodo.getValor()-5)
             elif ejecutando == 0:
