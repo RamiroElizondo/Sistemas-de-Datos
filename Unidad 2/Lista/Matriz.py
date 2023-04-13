@@ -63,9 +63,10 @@ class Lista: #Lista Enlazada
                     if columna < nodo.getColumna():
                         anterior=nodo
                         bandera = True
-                aux = nodo
+                else:
+                    aux = nodo
                 nodo = nodo.getSiguiente()
-                
+
             if nodo == None:
                 anterior = aux
             return anterior
@@ -136,5 +137,10 @@ if __name__ == '__main__':
     matriz1.insertar(9,1,4)
     matriz1.insertar(20,10,4)
     matriz1.recorrer()
-    
-    
+    print('\n')
+    matriz2 = Lista()
+    matriz2.insertar(2,4,5)
+    matriz2.insertar(10,6,8)
+    matriz2.insertar(5,9,2)
+    matriz2.insertar(9,8,7)
+    matriz2.recorrer()
