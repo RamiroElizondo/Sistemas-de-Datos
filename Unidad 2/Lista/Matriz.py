@@ -27,6 +27,8 @@ class Lista: #Lista Enlazada
         self.__comienzo = None
         self.__tamaño = 1
 
+    def getComienzo(self):
+        return self.__comienzo
     def estaVacia(self):
         return self.__comienzo == None
 
@@ -53,10 +55,7 @@ class Lista: #Lista Enlazada
             nodo = self.__comienzo
             bandera = False
             while nodo != None and bandera == False:
-                print('Fila Ingresada',fila)
-                print('Fila del nodo',nodo.getFila())
                 if fila < nodo.getFila():
-                    print('Fui Menor')
                     anterior=nodo
                     bandera = True
                 elif fila == nodo.getFila():
@@ -127,8 +126,18 @@ class Lista: #Lista Enlazada
                 print(nodo.getValor())
                 nodo = nodo.getSiguiente()
         print(nodo.getValor())
+"""
+def sumar(matriz1,matriz2):
+    matrizR = Lista()
+    nodo1 = matriz1.getComienzo()
+    nodo2 = matriz2.getComienzo()
+    if nodo1.getComienzo()
+    while nodo != None:
+
+    return matrizR"""
 
 if __name__ == '__main__':
+
     os.system('cls')
     matriz1 = Lista()
     matriz1.insertar(2,4,5)
@@ -136,11 +145,11 @@ if __name__ == '__main__':
     matriz1.insertar(5,3,2)
     matriz1.insertar(9,1,4)
     matriz1.insertar(20,10,4)
-    matriz1.recorrer()
-    print('\n')
+    
     matriz2 = Lista()
     matriz2.insertar(2,4,5)
     matriz2.insertar(10,6,8)
     matriz2.insertar(5,9,2)
     matriz2.insertar(9,8,7)
-    matriz2.recorrer()
+
+    """matrizR = sumar(matriz1,matriz2)"""
