@@ -123,18 +123,42 @@ class Lista: #Lista Enlazada
         else:
             nodo = self.__comienzo
             while nodo.getSiguiente() != None:
-                print(nodo.getValor())
+                print('Fila {} Columna {} Valor {}'.format(nodo.getFila(),nodo.getColumna(),nodo.getValor()))
                 nodo = nodo.getSiguiente()
-        print(nodo.getValor())
-"""
+        print('Fila {} Columna {} Valor {}'.format(nodo.getFila(),nodo.getColumna(),nodo.getValor()))
+        print('\n')
+
 def sumar(matriz1,matriz2):
     matrizR = Lista()
     nodo1 = matriz1.getComienzo()
     nodo2 = matriz2.getComienzo()
-    if nodo1.getComienzo()
-    while nodo != None:
-
-    return matrizR"""
+    print(nodo1.getFila(),' == ',nodo2.getFila())
+    if nodo1.getFila() < nodo2.getFila():
+        while nodo1.getSiguiente() != None:
+            print('Nodo 1 -',nodo1.getValor(),'Nodo 2 -',nodo2.getValor())
+            if nodo1.getFila() == nodo2.getFila() and nodo1.getColumna() == nodo2.getColumna():
+                valor = nodo1.getValor() + nodo2.getValor()
+                matrizR.insertar(valor,nodo1.getFila(),nodo1.getColumna())
+                nodo1 = nodo1.getSiguiente()
+            else:
+                matrizR.insertar(nodo1.getValor(),nodo1.getFila(),nodo1.getColumna())
+                matrizR.insertar(nodo2.getValor(),nodo2.getFila(),nodo2.getColumna())
+                nodo1 = nodo1.getSiguiente()
+                nodo2 = nodo2.getSiguiente()
+    elif nodo1.getFila() == nodo2.getFila():
+        if nodo1.getColumna() < nodo2.getColumna():
+            while nodo1.getSiguiente() != None:
+                print('Nodo 1 -',nodo1.getValor(),'Nodo 2 -',nodo2.getValor())
+                if nodo1.getFila() == nodo2.getFila() and nodo1.getColumna() == nodo2.getColumna():
+                    valor = nodo1.getValor() + nodo2.getValor()
+                    matrizR.insertar(valor,nodo1.getFila(),nodo1.getColumna())
+                    nodo1 = nodo1.getSiguiente()
+                else:
+                    matrizR.insertar(nodo1.getValor(),nodo1.getFila(),nodo1.getColumna())
+                    matrizR.insertar(nodo2.getValor(),nodo2.getFila(),nodo2.getColumna())
+                    nodo1 = nodo1.getSiguiente()
+                    nodo2 = nodo2.getSiguiente()
+    return matrizR
 
 if __name__ == '__main__':
 
@@ -152,4 +176,7 @@ if __name__ == '__main__':
     matriz2.insertar(5,9,2)
     matriz2.insertar(9,8,7)
 
-    """matrizR = sumar(matriz1,matriz2)"""
+    matriz1.recorrer()
+    matriz2.recorrer()
+    matrizR = sumar(matriz1,matriz2)
+    matrizR.recorrer()
