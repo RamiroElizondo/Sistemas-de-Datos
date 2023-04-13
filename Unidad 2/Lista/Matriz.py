@@ -63,7 +63,11 @@ class Lista: #Lista Enlazada
                     if columna < nodo.getColumna():
                         anterior=nodo
                         bandera = True
+                aux = nodo
                 nodo = nodo.getSiguiente()
+                
+            if nodo == None:
+                anterior = aux
             return anterior
 
     def insertar(self,valor,fila,columna):
@@ -73,18 +77,18 @@ class Lista: #Lista Enlazada
             self.__comienzo = nodo
         else:
             if self.__comienzo.getFila() > fila:
-                nodo.setSiguiente(self.__comienzo)
-                self.__comienzo = nodo
-            elif self.__comienzo.getFila() == fila:
-                if self.__comienzo.getColumna() > columna:
                     nodo.setSiguiente(self.__comienzo)
                     self.__comienzo = nodo
+            elif self.__comienzo.getFila() == fila:
+                    if self.__comienzo.getColumna() > columna:
+                        nodo.setSiguiente(self.__comienzo)
+                        self.__comienzo = nodo
             else:
                 previo = self.anterior(fila,columna)
                 nodo.setSiguiente(previo.getSiguiente())
                 previo.setSiguiente(nodo)
 
-                print('Se inserto correctamente')
+
 
     def suprimir(self,valor):
         if self.estaVacia():
@@ -125,9 +129,12 @@ class Lista: #Lista Enlazada
 
 if __name__ == '__main__':
     os.system('cls')
-    lista = Lista()
-    lista.insertar(2,4,5)
-    lista.insertar(10,4,2)
-    lista.insertar(5,3,2)
-    lista.insertar(9,1,4)
-    lista.recorrer()
+    matriz1 = Lista()
+    matriz1.insertar(2,4,5)
+    matriz1.insertar(10,4,2)
+    matriz1.insertar(5,3,2)
+    matriz1.insertar(9,1,4)
+    matriz1.insertar(20,10,4)
+    matriz1.recorrer()
+    
+    
