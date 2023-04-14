@@ -25,8 +25,9 @@ class Lista: #Lista Enlazada
     __comienzo: Nodo|None
     def __init__(self):
         self.__comienzo = None
-        self.__tamaño = 1
-
+        self.__tamaño = 0
+    def getTamaño(self):
+        return self.__tamaño
     def getComienzo(self):
         return self.__comienzo
     def estaVacia(self):
@@ -87,9 +88,7 @@ class Lista: #Lista Enlazada
                 previo = self.anterior(fila,columna)
                 nodo.setSiguiente(previo.getSiguiente())
                 previo.setSiguiente(nodo)
-
-
-
+        self.__tamaño+=1
     def suprimir(self,valor):
         if self.estaVacia():
             print('Esta Vacia')
@@ -128,37 +127,70 @@ class Lista: #Lista Enlazada
         print('Fila {} Columna {} Valor {}'.format(nodo.getFila(),nodo.getColumna(),nodo.getValor()))
         print('\n')
 
-def sumar(matriz1,matriz2):
-    matrizR = Lista()
+def sumar_matrices(matriz1, matriz2):
+    matriz_suma = Lista() # Crear una nueva matriz para almacenar los resultados
+
     nodo1 = matriz1.getComienzo()
     nodo2 = matriz2.getComienzo()
-    print(nodo1.getFila(),' == ',nodo2.getFila())
-    if nodo1.getFila() < nodo2.getFila():
-        while nodo1.getSiguiente() != None:
-            print('Nodo 1 -',nodo1.getValor(),'Nodo 2 -',nodo2.getValor())
+
+    while nodo1 is not None or nodo2 is not None:
+        fila1 = columna1 = fila2 = columna2 = valor1 = valor2 = 0
+
+        # Obtener los datos del primer nodo de la matriz 1
+        if nodo1 is not None:
+            fila1 = nodo1.getFila()
+            columna1 = nodo1.getColumna()
+            valor1 = nodo1.getValor()
+
+        # Obtener los datos del primer nodo de la matriz 2
+        if nodo2 is not None:
+            fila2 = nodo2.getFila()
+            columna2 = nodo2.getColumna()
+            valor2 = nodo2.getValor()
+
+        # Comparar las filas y columnas de los nodos para determinar la suma
+        if fila1 < fila2 or (fila1 == fila2 and columna1 < columna2):
+            # Si el nodo de la matriz 1 es menor, se agrega a la matriz de suma
+            matriz_suma.insertar(valor1, fila1, columna1)
+            nodo1 = nodo1.getSiguiente()
+
+        elif fila1 > fila2 or (fila1 == fila2 and columna1 > columna2):
+            # Si el nodo de la matriz 2 es menor, se agrega a la matriz de suma
+            matriz_suma.insertar(valor2, fila2, columna2)
+            nodo2 = nodo2.getSiguiente()
+
+        else:
+            # Si las filas y columnas son iguales, se suman los valores y se agrega a la matriz de suma
+            valor_suma = valor1 + valor2
+            matriz_suma.insertar(valor_suma, fila1, columna1)
+            nodo1 = nodo1.getSiguiente()
+            nodo2 = nodo2.getSiguiente()
+
+    return matriz_suma
+"""def sumar(matrizMayor,matrizMenor):
+    matrizR = Lista()
+    nodo1 = matrizMayor.getComienzo()
+    nodo2 = matrizMenor.getComienzo()
+    valor = 0
+    fila = 0
+    columna = 0
+    bandera = False
+    while nodo1 !=None:
+        while nodo2 != None:
             if nodo1.getFila() == nodo2.getFila() and nodo1.getColumna() == nodo2.getColumna():
                 valor = nodo1.getValor() + nodo2.getValor()
-                matrizR.insertar(valor,nodo1.getFila(),nodo1.getColumna())
-                nodo1 = nodo1.getSiguiente()
-            else:
-                matrizR.insertar(nodo1.getValor(),nodo1.getFila(),nodo1.getColumna())
-                matrizR.insertar(nodo2.getValor(),nodo2.getFila(),nodo2.getColumna())
-                nodo1 = nodo1.getSiguiente()
-                nodo2 = nodo2.getSiguiente()
-    elif nodo1.getFila() == nodo2.getFila():
-        if nodo1.getColumna() < nodo2.getColumna():
-            while nodo1.getSiguiente() != None:
-                print('Nodo 1 -',nodo1.getValor(),'Nodo 2 -',nodo2.getValor())
-                if nodo1.getFila() == nodo2.getFila() and nodo1.getColumna() == nodo2.getColumna():
-                    valor = nodo1.getValor() + nodo2.getValor()
-                    matrizR.insertar(valor,nodo1.getFila(),nodo1.getColumna())
-                    nodo1 = nodo1.getSiguiente()
-                else:
-                    matrizR.insertar(nodo1.getValor(),nodo1.getFila(),nodo1.getColumna())
-                    matrizR.insertar(nodo2.getValor(),nodo2.getFila(),nodo2.getColumna())
-                    nodo1 = nodo1.getSiguiente()
-                    nodo2 = nodo2.getSiguiente()
-    return matrizR
+                fila = nodo1.getFila()
+                columna = nodo1.getColumna()
+                bandera = True
+            nodo2 = nodo2.getSiguiente()
+        nodo2 = matrizMenor.getComienzo()
+        if bandera == True:
+            matrizR.insertar(valor,fila,columna)
+        else:
+            matrizR.insertar(nodo1.getValor(),nodo1.getFila(),nodo1.getColumna())
+        nodo1 = nodo1.getSiguiente()
+    
+    return matrizR"""
 
 if __name__ == '__main__':
 
@@ -173,10 +205,18 @@ if __name__ == '__main__':
     matriz2 = Lista()
     matriz2.insertar(2,4,5)
     matriz2.insertar(10,6,8)
-    matriz2.insertar(5,9,2)
+    matriz2.insertar(5,10,4)
     matriz2.insertar(9,8,7)
 
     matriz1.recorrer()
     matriz2.recorrer()
-    matrizR = sumar(matriz1,matriz2)
-    matrizR.recorrer()
+
+    matriz_suma = sumar_matrices(matriz1, matriz2)
+    matriz_suma.recorrer()
+    """if matriz1.getTamaño() > matriz2.getTamaño():
+        matrizR = sumar(matriz1,matriz2)
+        matrizR.recorrer()
+    else:
+        matrizR = sumar(matriz2,matriz1)
+        matrizR.recorrer()"""
+    
