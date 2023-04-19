@@ -1,0 +1,15 @@
+Lista Secuencial:
+Desventajas: Shifteo en la insercion y en el suprimir
+Ventajas: Si esta ordeanda se puede usar la busqueda binaria
+
+Lista Enlazada:
+Desventajas: Busqueda siempre Secuencial
+Ventajas: Insertar y suprimir rapidos
+
+Si el programa se dedica a insertar y suprimir es mas recomendable utilizar lista Enlazada
+Si el programa se dedica a busacar datos es mas recomendable utlizar lista Secuencial
+
+Lista por cursor
+Dato objeto:
+un arreglo tien informacion y un siguiente
+cabeza es tipo entero
