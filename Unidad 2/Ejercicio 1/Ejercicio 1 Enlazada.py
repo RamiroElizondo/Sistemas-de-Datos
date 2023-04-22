@@ -46,7 +46,6 @@ class Pila:
             print("Pila vacía")
             return None
         nodo = self.__tope
-        print(type(self.__tope))
         while nodo.getSiguiente() is not None:
             print(nodo.getValor())
             nodo = nodo.getSiguiente()
@@ -64,7 +63,11 @@ if __name__ == '__main__':
         numero -= 1
     
     pila.mostrar()
+    print('\n')
     while not pila.esta_vacia():
         resultado = resultado * pila.suprimir()
+        """pila.mostrar()
+        print('\n')"""
+        
 
     print('El factorial de', valor, 'es', resultado)

@@ -1,3 +1,4 @@
+import os
 from Pila import Pila
 
 def obtenerPilas(pila1,pila2,pila3):
@@ -35,7 +36,6 @@ if __name__ == '__main__':
     pilas=[pila1,pila2,pila3] 
     contador = 0
     while not termino(pila3,cantidad):
-
         desde = int(input('Desde: '))
         hacia = int(input('Hacia: '))
         indice1 = pilas[desde-1].getTope()
@@ -60,5 +60,5 @@ if __name__ == '__main__':
         contador+=1
     
     print('Termina el Juego'.center(27,'-'))
-    print('Moviminetos Realizados',contador)
+    print('Movimientos Realizados',contador)
     print('Movimientos Optimos',2**cantidad-1)

@@ -67,6 +67,7 @@ class Lista: #Lista Enlazada
                         bandera = True
                 aux = nodo
                 nodo = nodo.getSiguiente()
+            
             if nodo == None:
                 anterior = aux
             return anterior
@@ -82,7 +83,6 @@ class Lista: #Lista Enlazada
                 self.__comienzo = nodo
             elif self.__comienzo.getFila() == fila:
                 if self.__comienzo.getColumna() > columna:
-
                     nodo.setSiguiente(self.__comienzo)
                     self.__comienzo = nodo
             else:
