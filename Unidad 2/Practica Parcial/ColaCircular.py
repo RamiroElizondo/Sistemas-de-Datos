@@ -39,19 +39,19 @@ class ColaC:
             valor = self.__arreglo[self.__primero].getValor()
             self.__primero = (self.__primero+1)%self.__tamaño
             self.__cant-=1
+            print('Se suprimio')            
         return valor
 
     def mostrar(self):
         if self.estaVacia():
-            mostrar = 'Cola Vacia'
+           print('Cola Vacia')
         else:
             i = self.__primero
             j=0
-            for j in range(self.__cant):
+            while j < self.__cant:
                 print(self.__arreglo[i].getValor())
                 i=(i+1)%self.__tamaño
-            mostrar = ''
-        return print(mostrar)
+                j+=1
 
     
 if __name__ == '__main__':
