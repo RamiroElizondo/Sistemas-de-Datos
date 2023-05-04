@@ -11,6 +11,9 @@ class Nodo:
 
     def getValor(self):
         return self.__valor
+    
+    def setValor(self,valor):
+        self.__valor = valor
 
     def getIzquierda(self):
         return self.__izquierda
@@ -92,4 +95,39 @@ class ArbolBB:
             return self.reemplazo(nodo.getDerecha())
         return nodo
     
+    def inOrden(self,nodo):
+        if nodo != None:
+            self.inOrden(nodo.getIzquierda())
+            print(nodo.getValor(),',',end='')
+            self.inOrden(nodo.getDerecha())
+    
+    def preOrden(self,nodo):
+        if nodo != None:
+            print(nodo.getValor(),',',end='')
+            self.inOrden2(nodo.getIzquierda())
+            self.inOrden2(nodo.getDerecha())
+    
+    def postOrden(self,nodo):
+        if nodo != None:
+            self.inOrden2(nodo.getIzquierda())
+            self.inOrden2(nodo.getDerecha())
+            print(nodo.getValor(),',',end='')
 
+if __name__ == '__main__':
+    arbol = ArbolBB()
+    arbol.insertar(12)
+    arbol.insertar(7)
+    arbol.insertar(16)
+    arbol.insertar(3)
+    arbol.insertar(9)
+    arbol.insertar(14)
+    """print(arbol.getRaiz().getValor())
+    print(arbol.inOrden(arbol.getRaiz()))"""
+
+
+    print(arbol.getRaiz().getValor())
+    arbol.inOrden(arbol.getRaiz())
+    print('\n')
+    arbol.preOrden(arbol.getRaiz())
+    print('\n')
+    arbol.postOrden(arbol.getRaiz())
