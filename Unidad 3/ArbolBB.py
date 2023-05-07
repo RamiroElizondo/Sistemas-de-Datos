@@ -1,13 +1,12 @@
 class Nodo:
     __valor: int
-    __izquierda: None|Nodo
-    __derecha: None|Nodo
+   
 
     def __init__(self,valor):
         self.__valor = valor
         self.__contador = 1
-        self.__izquierda = izquierda
-        self.__derecha = derecha
+        self.__izquierda = None
+        self.__derecha = None
 
     def getValor(self):
         return self.__valor
@@ -42,12 +41,15 @@ class ArbolBB:
     def esta_vacio(self):
         return self.__raiz == None
 
+    def getRaiz(self):
+        return self.__raiz
+
     def insertar(self,valor):
         nodo = Nodo(valor)
         if self.esta_vacio():
             self.__raiz = nodo
         else:
-            insertarRecursivo(nodo,self.__raiz)
+            self.insertarRecursivo(nodo,self.__raiz)
     
     def insertarRecursivo(self,nodo,nodoActual):
         if nodo.getValor() < nodoActual.getValor():
@@ -98,36 +100,99 @@ class ArbolBB:
     def inOrden(self,nodo):
         if nodo != None:
             self.inOrden(nodo.getIzquierda())
-            print(nodo.getValor(),',',end='')
+            print(nodo.getValor(),' ',end='')
             self.inOrden(nodo.getDerecha())
     
     def preOrden(self,nodo):
         if nodo != None:
-            print(nodo.getValor(),',',end='')
-            self.inOrden2(nodo.getIzquierda())
-            self.inOrden2(nodo.getDerecha())
+            print(nodo.getValor(),' ',end='')
+            self.preOrden(nodo.getIzquierda())
+            self.preOrden(nodo.getDerecha())
     
     def postOrden(self,nodo):
         if nodo != None:
-            self.inOrden2(nodo.getIzquierda())
-            self.inOrden2(nodo.getDerecha())
-            print(nodo.getValor(),',',end='')
+            self.postOrden(nodo.getIzquierda())
+            self.postOrden(nodo.getDerecha())
+            print(nodo.getValor(),' ',end='')
+    
+    
+    def buscar(self,valor,nodoActual):
+        if self.esta_vacio():
+            return None
+        elif valor < nodoActual.getValor():
+            if nodoActual.getIzquierda() != None:
+                return self.buscar(valor, nodoActual.getIzquierda())
+            else:
+                return False
+        elif valor > nodoActual.getValor():
+            if nodoActual.getDerecha() != None:
+                return self.buscar(valor,nodoActual.getDerecha())
+            else:
+                return False
+        elif valor == nodoActual.getValor():
+            return nodoActual
+    
+    def nivel(self,nodo,nodoActual,contador):
+        if self.esta_vacio():
+            return None
+        elif nodo.getValor() < nodoActual.getValor():
+            if nodoActual.getIzquierda() != None:
+                contador += 1
+                return self.nivel(nodo,nodoActual.getIzquierda(),contador)
+        elif nodo.getValor() > nodoActual.getValor():
+            if nodoActual.getDerecha() != None:
+                contador += 1
+                return self.nivel(nodo,nodoActual.getDerecha(),contador)
+        elif nodo.getValor() == nodoActual.getValor():
+            return contador
 
-if __name__ == '__main__':
-    arbol = ArbolBB()
-    arbol.insertar(12)
-    arbol.insertar(7)
-    arbol.insertar(16)
-    arbol.insertar(3)
-    arbol.insertar(9)
-    arbol.insertar(14)
-    """print(arbol.getRaiz().getValor())
-    print(arbol.inOrden(arbol.getRaiz()))"""
+    def hoja(self,nodo):
+        if nodo.getDerecha() == None and nodo.getIzquierda() == None:
+            print('El nodo con valor',valor,'es hoja')
+            return None
+        else:
+            print('No es hoja')
+            return nodo
+        
+    def hijo(self,hijo,padre):
+        if padre.getIzquierda() != None:
+            if padre.getIzquierda().getValor() == hijo:
+                print('Es hijo')
+        elif padre.getDerecha() != None:
+            if padre.getDerecha().getValor() == hijo:
+                print('Es hijo')
+        else:
+            print('El padre no tiene hijos')
 
+    def padre(self,hijo,padre):
+        if padre.getIzquierda() != None:
+            if padre.getIzquierda().getValor() == hijo:
+                print('Es padre')
+        elif padre.getDerecha() != None:
+            if padre.getDerecha().getValor() == hijo:
+                print('Es padre')
+        else:
+            print('El padre no tiene hijos')
 
-    print(arbol.getRaiz().getValor())
-    arbol.inOrden(arbol.getRaiz())
-    print('\n')
-    arbol.preOrden(arbol.getRaiz())
-    print('\n')
-    arbol.postOrden(arbol.getRaiz())
+    def camino(self,desde,hasta,arreglo):
+        if self.esta_vacio():
+            return None
+        elif desde.getValor() < hasta.getValor():
+            arreglo.append(desde.getValor())
+            return self.camino(desde.getDerecha(),hasta,arreglo)
+        elif desde.getValor() > hasta.getValor():
+            arreglo.append(desde.getValor())
+            return self.camino(desde.getIzquierda(),hasta,arreglo)
+        else:
+            arreglo.append(desde.getValor())
+            return arreglo
+
+    def altura(self, nodo):
+        if nodo is None:
+            return 0
+        else:
+            alturaIzq = self.altura(nodo.getIzquierda())
+            alturaDer = self.altura(nodo.getDerecha())
+            return max(alturaIzq, alturaDer) + 1
+        
+                
