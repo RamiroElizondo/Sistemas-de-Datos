@@ -1,0 +1,15 @@
+Nodo no tiene hijos, por que es hoja
+si tiene un solo hijo, reemplazo por el hijo
+si tiene dos hijos, buscamos el mayor de los menores y enganchaos el anterior con el hijo izquierdo del reemplazo
+
+    def insertarRecursivo(self,nodo,nodoActual):
+        if nodoActual == None:
+            nodoActual = nodo
+    
+        if nodo.getValor() < nodoActual.getValor():
+             self.insertarRecursivo(nodo,nodoActual.getIzquierda())
+        elif nodo.getValor() > nodoActual.getValor():
+             self.insertarRecursivo(nodo, nodoActual.getDerecha())
+        else:
+            print('El elemento ya esta en la lista')
+            nodoActual.setContador()
