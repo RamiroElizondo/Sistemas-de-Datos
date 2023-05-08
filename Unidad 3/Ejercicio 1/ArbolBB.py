@@ -156,23 +156,14 @@ class ArbolBB:
         
     def hijo(self,hijo,padre):
         if padre.getIzquierda() != None:
-            if padre.getIzquierda().getValor() == hijo:
-                print('Es hijo')
-        elif padre.getDerecha() != None:
-            if padre.getDerecha().getValor() == hijo:
-                print('Es hijo')
-        else:
-            print('El padre no tiene hijos')
-
+            if padre.getIzquierda().getValor() == hijo.getValor():
+                return True
+        if padre.getDerecha() != None:
+            if padre.getDerecha().getValor() == hijo.getValor():
+                return True
+        
     def padre(self,hijo,padre):
-        if padre.getIzquierda() != None:
-            if padre.getIzquierda().getValor() == hijo:
-                print('Es padre')
-        elif padre.getDerecha() != None:
-            if padre.getDerecha().getValor() == hijo:
-                print('Es padre')
-        else:
-            print('El padre no tiene hijos')
+        return self.hijo(hijo, padre)
 
     def camino(self,desde,hasta,arreglo):
         if self.esta_vacio():

@@ -65,12 +65,23 @@ class Menu:
 
         hijo = self.__arbol.buscar(hijo,self.__arbol.getRaiz())
         padre = self.__arbol.buscar(padre,self.__arbol.getRaiz())
-        self.__arbol.hijo(hijo,padre)
+        valor = self.__arbol.hijo(hijo,padre)
+        if valor is True:
+            print('Es hijo')
+        else:
+            print('No es hijo')
 
     def opcionG(self):
         padre = int(input('Ingrese el valor del padre: '))
         hijo = int(input('Ingrese el valor del hijo: '))
-        self.__arbol.padre(hijo,padre)
+
+        hijo = self.__arbol.buscar(hijo,self.__arbol.getRaiz())
+        padre = self.__arbol.buscar(padre,self.__arbol.getRaiz())
+        valor = self.__arbol.padre(hijo,padre)
+        if valor is True:
+            print('Es Padre')
+        else:
+            print('No es Padre')
 
     def opcionH(self):
         arreglo = [] * 10
@@ -79,8 +90,11 @@ class Menu:
 
         desde = self.__arbol.buscar(desde,self.__arbol.getRaiz())
         hasta = self.__arbol.buscar(hasta,self.__arbol.getRaiz())
-        arreglo = self.__arbol.camino(desde,hasta,arreglo)
-        print(arreglo)
+        if self.__arbol.hijo(desde, hasta):
+            arreglo = self.__arbol.camino(desde,hasta,arreglo)
+            print(arreglo)
+        else:
+            print('No se puede hacer el camino')
 
     def opcionI(self):
         contador = self.__arbol.altura(self.__arbol.getRaiz())
