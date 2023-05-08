@@ -83,7 +83,7 @@ class ArbolBB:
                 return nodoActual.getDerecha()
             
             reemplazo = self.reemplazo(nodoActual.getIzquierda())
-            modoAcutal.setValor(reemplazo.getValor())
+            nodoActual.setValor(reemplazo.getValor())
             nodoActual.setIzquierda(self.suprimirRecusivo(reemplazo.getValor(),nodoActual.getIzquierda()))
         elif valor < nodoActual.getValor():
             nodoActual.setIzquierda(self.suprimirRecusivo(valor,nodoActual.getIzquierda()))

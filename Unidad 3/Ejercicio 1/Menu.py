@@ -28,6 +28,7 @@ class Menu:
         self.__arbol.insertar(9)
         self.__arbol.insertar(14)
         self.__arbol.insertar(13)
+        self.__arbol.insertar(15)
         print('Se ingresaron los nodos'.center(30,'-'))
 
     def opcionB(self):
