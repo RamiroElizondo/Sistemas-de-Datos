@@ -33,8 +33,8 @@ class Nodo:
     def getContador(self):
         return self.__contador
 
-    def setContador(self):
-        self.__contador +=1
+    def setContador(self,valor):
+        self.__contador = valor
     
     def grado(self):
         if self.__izquierda == None and self.__derecha == None:
@@ -74,7 +74,8 @@ class ArbolBB:
                 self.insertarRecursivo(nodo, nodoActual.getDerecha())
         else:
             print('El elemento ya esta en la lista')
-            nodoActual.setContador()
+            valor = nodoActual.getContador()
+            nodoActual.setContador(valor+1)
 
     def suprimir(self,valor):
         if self.__raiz != None:
@@ -89,7 +90,11 @@ class ArbolBB:
     
     def suprimirRecursivo(self,valor,nodoActual,anterior= Nodo|None,izquierda=True):
         if valor == nodoActual.getValor():
-            if self.hoja(nodoActual): #Si es hoja
+            if nodoActual.getContador() > 1:
+                valor = nodoActual.getContador()
+                nodoActual.setContador(valor-1)
+
+            elif self.hoja(nodoActual): #Si es hoja
                 if izquierda: 
                     anterior.setIzquierda(None) #Si el nodo hoja es hijo izquierdo
                 else: 

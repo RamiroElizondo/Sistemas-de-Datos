@@ -22,6 +22,7 @@ class Menu:
     
     def opcionA(self):
         self.__arbol.insertar(12)
+        self.__arbol.insertar(12)
         self.__arbol.insertar(7)
         self.__arbol.insertar(16)
         self.__arbol.insertar(3)
