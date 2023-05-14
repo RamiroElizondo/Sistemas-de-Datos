@@ -36,7 +36,6 @@ class Menu:
         valor = int(input('Ingrese el valor del nodo que quiere eliminar: '))
         self.__arbol.suprimir(valor)
         self.opcionJ()
-        print(self.__arbol.getRaiz().getValor())
     
     def opcionC(self):
         contenido = int(input('Ingrese el valor del nodo a buscar: '))

@@ -62,20 +62,21 @@ class ArbolBB:
             self.insertarRecursivo(nodo,self.__raiz)
     
     def insertarRecursivo(self,nodo,nodoActual):
+        if nodo.getValor() == nodoActual.getValor():
+            print('El elemento ya esta en la lista')
+            valor = nodoActual.getContador()
+            nodoActual.setContador(valor+1)
+            return 
         if nodo.getValor() < nodoActual.getValor():
             if nodoActual.getIzquierda() is None:
                 nodoActual.setIzquierda(nodo)
             else:
                 self.insertarRecursivo(nodo,nodoActual.getIzquierda())
-        elif nodo.getValor() > nodoActual.getValor():
+        else:
             if nodoActual.getDerecha() is None:
                 nodoActual.setDerecha(nodo)
             else:
                 self.insertarRecursivo(nodo, nodoActual.getDerecha())
-        else:
-            print('El elemento ya esta en la lista')
-            valor = nodoActual.getContador()
-            nodoActual.setContador(valor+1)
 
     def suprimir(self,valor):
         if self.__raiz != None:
@@ -153,12 +154,18 @@ class ArbolBB:
             return False
 
     def hijo(self,hijo,padre):
-        if padre.getIzquierda() != None:
-            if padre.getIzquierda().getValor() == hijo.getValor():
-                return True
-        if padre.getDerecha() != None:
-            if padre.getDerecha().getValor() == hijo.getValor():
-                return True
+        if padre.getValor() == hijo.getValor():
+            return True
+        elif padre.getValor() > hijo.getValor():
+            if padre.getIzquierda() != None:
+                return self.hijo(hijo,padre.getIzquierda())
+            else:
+                return False
+        elif padre.getValor() < hijo.getValor():
+            if padre.getDerecha() != None:
+                return self.hijo(hijo,padre.getDerecha())
+            else:
+                return False
         
     def padre(self,hijo,padre):
         return self.hijo(hijo, padre)
