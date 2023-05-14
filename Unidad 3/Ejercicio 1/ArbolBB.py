@@ -1,6 +1,10 @@
+from __future__ import annotations
+
+
 class Nodo:
     __valor: int
-   
+    __izquierda: Nodo | None
+    __derecha: Nodo | None
 
     def __init__(self,valor):
         self.__valor = valor
@@ -31,22 +35,28 @@ class Nodo:
 
     def setContador(self):
         self.__contador +=1
+    
+    def grado(self):
+        if self.__izquierda == None and self.__derecha == None:
+            return 0
+        elif self.__izquierda == None or self.__derecha == None:
+            return 1
+        else:
+            return 2
+
 
 class ArbolBB:
     __raiz: None|Nodo
 
     def __init__(self):
         self.__raiz = None
-    
-    def esta_vacio(self):
-        return self.__raiz == None
 
     def getRaiz(self):
         return self.__raiz
 
     def insertar(self,valor):
         nodo = Nodo(valor)
-        if self.esta_vacio():
+        if self.__raiz == None:
             self.__raiz = nodo
         else:
             self.insertarRecursivo(nodo,self.__raiz)
@@ -65,60 +75,49 @@ class ArbolBB:
         else:
             print('El elemento ya esta en la lista')
             nodoActual.setContador()
-    
+
     def suprimir(self,valor):
-        if not self.esta_vacio():
-            self.__raiz = self.suprimirRecusivo(valor,self.__raiz)
+        if self.__raiz != None:
+            self.__raiz = self.suprimirRecursivo(valor,self.__raiz)
         else:
             print('Arbol Vacio')
-    
-    def suprimirRecusivo(self,valor,nodoActual):
-        if valor == nodoActual.getValor():
-            if nodoActual.getIzquierda() is None and nodoActual.getDerecha() is None:
-                return None
 
-            if nodoActual.getIzquierda() != None and nodoActual.getDerecha() == None:
-                return nodoActual.getIzquierda()
-            elif nodoActual.getIzquierda() == None and nodoActual.getDerecha() != None:
-                return nodoActual.getDerecha()
-            
-            reemplazo = self.reemplazo(nodoActual.getIzquierda())
-            nodoActual.setValor(reemplazo.getValor())
-            nodoActual.setIzquierda(self.suprimirRecusivo(reemplazo.getValor(),nodoActual.getIzquierda()))
-        elif valor < nodoActual.getValor():
-            nodoActual.setIzquierda(self.suprimirRecusivo(valor,nodoActual.getIzquierda()))
-        elif valor > nodoActual.getValor():
-            nodoActual.setDerecha(self.suprimirRecusivo(valor, nodoActual.getDerecha()))
-        
-        return nodoActual
-    
     def reemplazo(self,nodo):
         if nodo.getDerecha() is not None:
             return self.reemplazo(nodo.getDerecha())
         return nodo
     
-    def inOrden(self,nodo):
-        if nodo != None:
-            self.inOrden(nodo.getIzquierda())
-            print(nodo.getValor(),' ',end='')
-            self.inOrden(nodo.getDerecha())
-    
-    def preOrden(self,nodo):
-        if nodo != None:
-            print(nodo.getValor(),' ',end='')
-            self.preOrden(nodo.getIzquierda())
-            self.preOrden(nodo.getDerecha())
-    
-    def postOrden(self,nodo):
-        if nodo != None:
-            self.postOrden(nodo.getIzquierda())
-            self.postOrden(nodo.getDerecha())
-            print(nodo.getValor(),' ',end='')
-    
-    
+    def suprimirRecursivo(self,valor,nodoActual,anterior= Nodo|None,izquierda=True):
+        if valor == nodoActual.getValor():
+            if self.hoja(nodoActual): #Si es hoja
+                if izquierda: 
+                    anterior.setIzquierda(None) #Si el nodo hoja es hijo izquierdo
+                else: 
+                    anterior.setDerecha(None) #Si el nodo hoja es hijo derecho
+            elif nodoActual.grado() == 1: #Si tiene un hijo+
+                if nodoActual.getIzquierda() is not None: 
+                    hijo = nodoActual.getIzquierda() #Si el hijo es izquierdo
+                else:
+                    hijo = nodoActual.getDerecha() #Si el hijo es derecho 
+                if izquierda: 
+                    anterior.setIzquierda(hijo)
+                else:
+                    anterior.setDerecha(hijo)
+            elif nodoActual.grado() == 2: #Si tiene dos hijos
+                reemplazo = self.reemplazo(nodoActual.getIzquierda())
+                nodoActual.setValor(reemplazo.getValor())
+                self.suprimirRecursivo(reemplazo.getValor(),nodoActual.getIzquierda(),nodoActual,True)
+        elif valor < nodoActual.getValor():
+            if nodoActual.getIzquierda() is not None:
+                self.suprimirRecursivo(valor,nodoActual.getIzquierda(),nodoActual,True)
+        else:
+            if nodoActual.getDerecha() is not None:
+                self.suprimirRecursivo(valor,nodoActual.getDerecha(),nodoActual,False)
+        return nodoActual 
+
     def buscar(self,valor,nodoActual):
-        if self.esta_vacio():
-            return None
+        if valor == nodoActual.getValor():
+            return nodoActual
         elif valor < nodoActual.getValor():
             if nodoActual.getIzquierda() != None:
                 return self.buscar(valor, nodoActual.getIzquierda())
@@ -129,12 +128,10 @@ class ArbolBB:
                 return self.buscar(valor,nodoActual.getDerecha())
             else:
                 return False
-        elif valor == nodoActual.getValor():
-            return nodoActual
-    
+
     def nivel(self,nodo,nodoActual,contador):
-        if self.esta_vacio():
-            return None
+        if nodo.getValor() == nodoActual.getValor():
+            return contador
         elif nodo.getValor() < nodoActual.getValor():
             if nodoActual.getIzquierda() != None:
                 contador += 1
@@ -143,17 +140,13 @@ class ArbolBB:
             if nodoActual.getDerecha() != None:
                 contador += 1
                 return self.nivel(nodo,nodoActual.getDerecha(),contador)
-        elif nodo.getValor() == nodoActual.getValor():
-            return contador
 
     def hoja(self,nodo):
         if nodo.getDerecha() == None and nodo.getIzquierda() == None:
-            print('El nodo con valor',valor,'es hoja')
-            return None
+            return True
         else:
-            print('No es hoja')
-            return nodo
-        
+            return False
+
     def hijo(self,hijo,padre):
         if padre.getIzquierda() != None:
             if padre.getIzquierda().getValor() == hijo.getValor():
@@ -166,17 +159,15 @@ class ArbolBB:
         return self.hijo(hijo, padre)
 
     def camino(self,desde,hasta,arreglo):
-        if self.esta_vacio():
-            return None
+        if desde.getValor() == hasta.getValor():
+            arreglo.append(desde.getValor())
+            return arreglo
         elif desde.getValor() < hasta.getValor():
             arreglo.append(desde.getValor())
             return self.camino(desde.getDerecha(),hasta,arreglo)
         elif desde.getValor() > hasta.getValor():
             arreglo.append(desde.getValor())
             return self.camino(desde.getIzquierda(),hasta,arreglo)
-        else:
-            arreglo.append(desde.getValor())
-            return arreglo
 
     def altura(self, nodo):
         if nodo is None:
@@ -185,5 +176,21 @@ class ArbolBB:
             alturaIzq = self.altura(nodo.getIzquierda())
             alturaDer = self.altura(nodo.getDerecha())
             return max(alturaIzq, alturaDer) + 1
-        
-                
+
+    def inOrden(self,nodo):
+        if nodo != None:
+            self.inOrden(nodo.getIzquierda())
+            print(nodo.getValor(),' ',end='')
+            self.inOrden(nodo.getDerecha())
+
+    def preOrden(self,nodo):
+        if nodo != None:
+            print(nodo.getValor(),' ',end='')
+            self.preOrden(nodo.getIzquierda())
+            self.preOrden(nodo.getDerecha())
+
+    def postOrden(self,nodo):
+        if nodo != None:
+            self.postOrden(nodo.getIzquierda())
+            self.postOrden(nodo.getDerecha())
+            print(nodo.getValor(),' ',end='')

@@ -28,13 +28,14 @@ class Menu:
         self.__arbol.insertar(9)
         self.__arbol.insertar(14)
         self.__arbol.insertar(13)
-        self.__arbol.insertar(15)
+       
         print('Se ingresaron los nodos'.center(30,'-'))
 
     def opcionB(self):
         valor = int(input('Ingrese el valor del nodo que quiere eliminar: '))
         self.__arbol.suprimir(valor)
         self.opcionJ()
+        print(self.__arbol.getRaiz().getValor())
     
     def opcionC(self):
         contenido = int(input('Ingrese el valor del nodo a buscar: '))
@@ -58,7 +59,11 @@ class Menu:
         valor = int(input('Ingrese el valor del nodo a saber si es hoja: '))
         nodo = self.__arbol.buscar(valor,self.__arbol.getRaiz())
         if nodo !=None:
-            self.__arbol.hoja(nodo)
+            valor = self.__arbol.hoja(nodo)
+            if valor is True:
+                print('Es hoja')
+            else:
+                print('No es hoja')
 
     def opcionF(self):
         hijo = int(input('Ingrese el valor del hijo: '))
