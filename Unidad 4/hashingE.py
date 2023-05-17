@@ -21,11 +21,11 @@ class Nodo:
 class Hashing:
     __arreglo = None
     __dimension = None
-    __cantPreguntas = None
+    __cantPreguntas: int
     def __init__(self,dimension):
         self.__dimension = dimension
         self.__arreglo = np.full(dimension, None)
-        self.__cantColisiones = None
+        self.__cantPreguntas = 0
 
     def metodoDiv(self, valor):
         valor = valor % self.__dimension
@@ -95,9 +95,25 @@ class Hashing:
                     print('El elemento si esta')
                     bandera = True
                 actual = actual.getSiguiente()
-            
+    
+def primo(valor):
+    bandera = True
+    for i in range(2,valor):
+        if valor % i == 0:
+            bandera = False
+    return bandera
+
+def primoProximo(valor):
+    while primo(valor) == False:
+        valor += 1
+    return valor
+
 if __name__ == '__main__':
-    hash = Hashing(50)
+    tam = int(input('Ingrese el tamaño del arreglo: '))
+    tam//=2
+    if primo(tam) == False:
+        tam = primoProximo(tam)
+    hash = Hashing(tam)
     hash.insertar(25453,1)
     hash.insertar(81235,1)
     hash.buscar(25453,1)
