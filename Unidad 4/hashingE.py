@@ -86,11 +86,11 @@ class Hashing:
         actual = self.__arreglo[indice]
         bandera = False
         if actual is None:
-            self.__cantColisiones+=1
+            self.__cantPreguntas+=1
             print('No esta')
         else:
             while actual != None and bandera != True:
-                self.__cantColisiones+=1
+                self.__cantPreguntas+=1
                 if actual.getValor() == valor:
                     print('El elemento si esta')
                     bandera = True
