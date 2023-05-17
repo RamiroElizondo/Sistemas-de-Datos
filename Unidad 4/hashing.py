@@ -1,27 +1,30 @@
 import numpy as np
-from pila import Pila
+
 
 class Nodo:
-    __siguiente = None
     __valor = None
-
-    def __init(self, valor):
+    __siguiente = None
+    
+    def __init__(self, valor):
+        self.__valor = valor
         self.__siguiente = None
-        self.__valor = None
+        
     def setSiguiente(self, siguiente):
         self.__siguiente = siguiente
-    def getDato(self):
+    
+    def getSiguiente(self):
+        return self.__siguiente
+
+    def getValor(self):
         return self.__valor
-    def getSigiuente(self):
-     return self.__siguiente
 
 class Hashing:
     __arreglo = None
     __dimension = None
-    __cantColisiones = None
+    __cantPreguntas = None
     def __init__(self,dimension):
         self.__dimension = dimension
-        self.__arreglo = np.full(dimension, Pila(), dtype=Pila)
+        self.__arreglo = np.full(dimension, None)
         self.__cantColisiones = None
 
     def metodoDiv(self, valor):
@@ -35,42 +38,66 @@ class Hashing:
     def plegado(self, valor): #25 %5 /10 2.5
         suma = 0
         while valor > 0:
-            suma += valor % 10
-            valor = valor // 10
-        return suma
+            suma += valor % 100
+            valor = valor // 100
+        return self.metodoDiv(suma)
 
     def cuadradoMedio(self, valor):
         valor = valor ** 2
-        valor = self.extraccion(valor,100)
-        return valor
+        return self.metodoDiv(valor)
 
     def Alfanumerio(self,cadena):
         total=0
         for caracter in cadena:
             digito = ord(caracter)
             total += digito
-        total = total % self.__dimension
-        return total
+        return self.metodoDiv(total)
 
-    def insertar(self,valor): #5
-        indice = self.metodoDiv(valor)
-        print('1',indice)
-        indice = self.extraccion(valor)
-        print('2',indice)
-        indice = self.plegado(valor)
-        print('3',indice)
-        indice = self.cuadradoMedio(valor)
-        print('4',indice)
-        print('\n')
+    def insertar(self,valor,metodo):
+        if metodo == 1:
+            indice = self.metodoDiv(valor)
+        elif metodo == 2:
+            indice = self.extraccion(valor)
+        elif metodo == 3:
+            indice = self.plegado(valor)
+        elif metodo == 4:
+            indice = self.cuadradoMedio(valor)
+        else:
+            indice = self.Alfanumerio(valor)
+        nodo = Nodo(valor)
+        if self.__arreglo[indice] == None:
+            self.__arreglo[indice] = nodo
+        else:
+            nodo.setSiguiente(self.__arreglo[indice])
+            self.__arreglo[indice] = nodo
 
-        #self.__arreglo[indice].Linsetar(valor)
-    
-    def insertarA(self,valor):
-        indice = self.Alfanumerio(valor)
-        print(indice)
+    def buscar(self,valor,metodo):
+        if metodo == 1:
+            indice = self.metodoDiv(valor)
+        elif metodo == 2:
+            indice = self.extraccion(valor)
+        elif metodo == 3:
+            indice = self.plegado(valor)
+        elif metodo == 4:
+            indice = self.cuadradoMedio(valor)
+        else:
+            indice = self.Alfanumerio(valor)
 
+        actual = self.__arreglo[indice]
+        bandera = False
+        if actual is None:
+            self.__cantColisiones+=1
+            print('No esta')
+        else:
+            while actual != None and bandera != True:
+                self.__cantColisiones+=1
+                if actual.getValor() == valor:
+                    print('El elemento si esta')
+                    bandera = True
+                actual = actual.getSiguiente()
+            
 if __name__ == '__main__':
     hash = Hashing(50)
-    """hash.insertar(25453)
-    hash.insertar(81235)"""
-    hash.insertarA('hola')
+    hash.insertar(25453,1)
+    hash.insertar(81235,1)
+    hash.buscar(25453,1)
