@@ -107,6 +107,7 @@ class Lista: #Lista Enlazada, por posicion
 if __name__ == '__main__':
     os.system('cls')
     lista = Lista()
+    lista.recorrer()
     lista.insertar(1,1)
     lista.insertar(2,2)
     lista.insertar(3,2)

@@ -1,19 +1,12 @@
 import numpy as np
-class HashingB:
+class HashingDA:
     __arreglo: np.array
-    __tamaño: int
-    __contador: np.array
-    def __init__(self,tamaño):
-        self.__arreglo = np.full((tamaño+2,4),0)
-        self.__contador = np.full(tamaño+2,0)
-        self.__dimension = tamaño+2
+    __dimension: int
 
-    def getArreglo(self):
-        return self.__arreglo
-
-    def getContadores(self):
-        return self.__contador
-
+    def __init__(self, dimension):
+        self.__dimension = dimension
+        self.__arreglo = np.full(dimension, None)
+    
     def metodoDiv(self, valor):
         valor = valor % self.__dimension
         return valor
@@ -41,25 +34,23 @@ class HashingB:
         return self.metodoDiv(total)
     
     def insertar(self,valor):
-        indice1 = self.metodoDiv(valor)
-        indice2 = self.__contador[indice1]
-
-        print('Indice 1',indice1)
-        if indice2 > 4:
-            # Zona de Overflow
-            print(self.__dimension)
-            indice3 = self.__dimension -2
-            indice4 = self.__contador[indice3]
-            print(indice3)
-
-
-            self.__arreglo[indice3][indice4] = valor
-            self.__contador[indice3] += 1
+        indice = self.metodoDiv(valor)
+        print(indice)
+        if self.__arreglo[indice] == None:
+            self.__arreglo[indice] = valor
         else:
-            self.__arreglo[indice1][indice2] = valor
-        self.__contador[indice1] += 1
-    
-    
+            bandera = False
+            while bandera == False:
+                indice += 1
+                if indice == self.__dimension:
+                    indice = 0
+                if self.__arreglo[indice] == None:
+                    bandera = True
+            self.__arreglo[indice] = valor
+
+    def getArreglo(self):
+        return self.__arreglo
+
 def primo(valor):
     bandera = True
     for i in range(2,valor):
@@ -74,18 +65,18 @@ def primoProximo(valor):
 
 if __name__ == '__main__':
     tam = int(input('Ingrese el tamaño del arreglo: '))
-    tam//=4
     if primo(tam) == False:
         tam = primoProximo(tam)
-    hash = HashingB(tam)
-
+    hash = HashingDA(tam)
+    print(hash.getArreglo())
     
     hash.insertar(25453)
     hash.insertar(81235)
+    hash.insertar(39000)
     hash.insertar(81235)
     hash.insertar(81235)
-    hash.insertar(81235)
+    hash.insertar(39000)
+    hash.insertar(25453)
     
     print(hash.getArreglo())
-
-    print(hash.getContadores())
+         

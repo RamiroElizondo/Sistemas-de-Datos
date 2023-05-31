@@ -26,7 +26,8 @@ class Hashing:
         self.__dimension = dimension
         self.__arreglo = np.full(dimension, None)
         self.__cantPreguntas = 0
-
+    def getArreglo(self):
+        return self.__arreglo
     def metodoDiv(self, valor):
         valor = valor % self.__dimension
         return valor
