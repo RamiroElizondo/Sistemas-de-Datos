@@ -15,7 +15,7 @@ class HashingB:
         return self.__contador
 
     def metodoDiv(self, valor):
-        valor = valor % self.__dimension
+        valor = valor % (self.__dimension-2)
         return valor
     
     def extraccion(self, valor,mod=10):
@@ -43,16 +43,10 @@ class HashingB:
     def insertar(self,valor):
         indice1 = self.metodoDiv(valor)
         indice2 = self.__contador[indice1]
-
-        print('Indice 1',indice1)
-        if indice2 > 4:
+        if indice2 >= 4:
             # Zona de Overflow
-            print(self.__dimension)
             indice3 = self.__dimension -2
             indice4 = self.__contador[indice3]
-            print(indice3)
-
-
             self.__arreglo[indice3][indice4] = valor
             self.__contador[indice3] += 1
         else:
@@ -77,15 +71,27 @@ if __name__ == '__main__':
     tam//=4
     if primo(tam) == False:
         tam = primoProximo(tam)
-    hash = HashingB(tam)
-
     
+    hash = HashingB(tam)
     hash.insertar(25453)
     hash.insertar(81235)
     hash.insertar(81235)
     hash.insertar(81235)
     hash.insertar(81235)
     
-    print(hash.getArreglo())
-
-    print(hash.getContadores())
+    arreglo = hash.getArreglo()
+    contadores = hash.getContadores()
+    print(arreglo)
+    print(contadores)
+    """for i in range(len(arreglo)-2):
+        
+        for j in range(4):
+            print(arreglo[i][j],end="      ")
+            print(contadores[i],end="  ")
+        print('\n')
+    
+    print('\nZona de Overflow')
+    for i in range(len(arreglo)-2,len(arreglo)):
+        for j in range(4):
+            print(arreglo[i][j],end="  ")
+            """
