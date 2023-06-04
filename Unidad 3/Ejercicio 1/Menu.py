@@ -1,4 +1,5 @@
 from ArbolBB import ArbolBB
+import numpy as np
 class Menu:
     __arbol: ArbolBB()
 
@@ -18,7 +19,9 @@ class Menu:
             '\ti- Altura del albol\n'
             '\tj- Mostar inOrden\n'
             '\tk- Mostar preOrden\n'
-            '\tl- Mostar postOrden\n')
+            '\tl- Mostar postOrden\n'
+            '\tm- Mostrar cantidad de hojas\n'
+            '\tn- Mostrar antecesores de un nodo\n')
     
     def opcionA(self):
         self.__arbol.insertar(12)
@@ -35,6 +38,7 @@ class Menu:
     def opcionB(self):
         valor = int(input('Ingrese el valor del nodo que quiere eliminar: '))
         self.__arbol.suprimir(valor)
+       
         self.opcionJ()
     
     def opcionC(self):
@@ -118,6 +122,18 @@ class Menu:
         
         self.__arbol.postOrden(self.__arbol.getRaiz())
         print('\n')
+    
+    def opcionM(self):
+        valor = self.__arbol.cantHojas(self.__arbol.getRaiz(),0)
+        print('Cantidad de hojas: ',valor)
+
+    def opcionN(self):
+        arreglo = np.full(10,None)
+        arreglo = self.__arbol.antecesores(self.__arbol.getRaiz(),13,arreglo)
+        for i in range(len(arreglo)):
+            if arreglo[i] != None:
+                print(arreglo[i],end=" ")
+        print('\n')
 
     def menuOpciones(self,opcion):
         if opcion == 'a':
@@ -144,5 +160,9 @@ class Menu:
             self.opcionK()
         elif opcion == 'l':
             self.opcionL()
+        elif opcion == 'm':
+            self.opcionM()
+        elif opcion == 'n':
+            self.opcionN()
         else:
             print('Opcion no valida'.center(30, '-'))

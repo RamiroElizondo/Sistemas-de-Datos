@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import numpy as np
 
 class Nodo:
     __valor: int
@@ -43,7 +43,6 @@ class Nodo:
             return 1
         else:
             return 2
-
 
 class ArbolBB:
     __raiz: None|Nodo
@@ -206,3 +205,25 @@ class ArbolBB:
             self.postOrden(nodo.getIzquierda())
             self.postOrden(nodo.getDerecha())
             print(nodo.getValor(),' ',end='')
+        
+    def cantHojas(self,nodo,contador):
+        if nodo != None:
+            if self.hoja(nodo):
+                contador += 1
+            contador = self.cantHojas(nodo.getIzquierda(),contador)
+            contador = self.cantHojas(nodo.getDerecha(),contador)
+        return contador
+    
+    def antecesores(self, nodo, valor, arreglo,indice=0):
+        if nodo != None:
+            if nodo.getValor() == valor:
+                return arreglo
+            else:
+                arreglo[indice] = nodo.getValor()
+                indice+=1
+                if nodo.getValor() > valor:
+                    return self.antecesores(nodo.getIzquierda(), valor, arreglo,indice)
+                else:
+                    return self.antecesores(nodo.getDerecha(), valor, arreglo,indice)
+        else:
+            return arreglo
