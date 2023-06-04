@@ -49,3 +49,6 @@ class Cola:
 
     def estaVacia(self):
         return self.__primero == None and self.__ultimo == None
+    
+    def getTamaño(self):
+        return self.__tamaño    

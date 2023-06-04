@@ -1,12 +1,6 @@
-"""
-Ejercicio 1
-Definir el T.A.D Grafo/Digrafo:
-a) Especificación.
-b) Representación (para la representación secuencial de grafo, utilizar arreglo unidimensional)
-c) Implementación de todas las operaciones.
-"""
 from cola import Cola
 from pila import Pila
+from lista import ListaEnlazada
 import numpy as np
 class Registro:
     def __init__(self, nodo, conocido, distancia, camino):
@@ -15,11 +9,12 @@ class Registro:
         self.distancia = distancia
         self.camino = camino
 class Grafo:
-    __arreglo = [[0,1,1,0,0,0],[1,0,0,0,0,0],[0,0,1,0,0,1],[1,0,0,0,1,0],[0,0,1,0,1,1],[1,0,1,0,0,1]]
-    __matrizA: np.ndarray
+    __matrizA: np.array
 
     def __init__(self,aristas):
-        self.__matrizA = np.full((6,6),0)
+        self.__matrizA = np.full((6,6),None)
+        for i in range(len(self.__matrizA)):
+            self.__matrizA[i] = ListaEnlazada()
         for arista in aristas:
             i = arista[0]
             j = arista[1]
@@ -29,48 +24,47 @@ class Grafo:
     def getPeso(self,vertice1,vertice2):
         return self.__matrizA[vertice1][vertice2]
 
-    def mostrar(self):
-        for i in range(6):
-            for j in range(6):
-                print(self.__matrizA[i][j],end=' ')
-            print('\n')
+    def mostrar(self,vertices):
+        for i in range(len(self.__matrizA)):
+            print(vertices[i], end=": ")
+            for j in range(len(self.__matrizA)):
+                if self.__matrizA[i].nodoRelacionado(j):
+                    print(vertices[j], end=" ")
+            print()
 
     def adyacentes(self,vertice):
-        arreglo= []
-        
+        adyacentes= []
         for i in range(len(self.__matrizA)):
-            if self.__matrizA[vertice][i] == 1:
-                arreglo.append(i)
-        return arreglo
+            if self.__matrizA[vertice].nodoRelacionado(i):
+                adyacentes.append(i)
+        return adyacentes
 
     def REA(self, vertice):
-        visitado = np.full(len(self.__matrizA), False) 
+        visitado = []
         cola = Cola()
         cola.insertar(vertice)
-        while not cola.estaVacia():
+        while cola.getTamaño() > 0:
             actual = cola.suprimir().getValor()
-            if visitado[actual] == False:
-                visitado[actual] = True  # Marcar el vértice como visitado
+            if actual not in visitado:
+                visitado.append(actual)  # Marcar el vértice como visitado
                 ady = self.adyacentes(actual)
                 # Agregar los vecinos no visitados del vértice actual a la cola
                 for w in ady:
-                    if w not in visitado:
-                        cola.insertar(w)
-        return vistiado
+                    cola.insertar(w)
+        return visitado
 
     def REP(self,vertice):
-        visitados = np.full(len(self.__matrizA), False) 
+        visitado = []
         pila = Pila()
         pila.insertar(vertice)
         while pila.getTamaño() > 0:
-            v = pila.suprimir()
-            if v not in visitados:
-                visitado[actual] = True
-                ady = self.adyacentes(v)
+            actual = pila.suprimir()
+            if actual not in visitado:
+                visitado.append(actual)
+                ady = self.adyacentes(actual)
                 for w in ady:
-                    if w not in visitados:
-                        pila.insertar(w)
-        return visitados
+                    pila.insertar(w)
+        return visitado
 
     def camino(self, vertice1, vertice2):
         camino = []
@@ -144,7 +138,7 @@ if __name__ == '__main__':
     vertices = [0,1,2,3,4,5]
     aristas = [[0,1],[2,5],[2,3],[3,4],[4,5],[1,2]]
     grafo = Grafo(aristas)
-    grafo.mostrar()
+    grafo.mostrar(vertices)
 
     vertice = int(input('Ingrese un Vertice: '))
     print('Los vertices adyacentes a',vertice,'son: ')

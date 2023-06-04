@@ -1,3 +1,10 @@
+"""
+Ejercicio 1
+Definir el T.A.D Grafo/Digrafo:
+a) Especificación.
+b) Representación (para la representación secuencial de grafo, utilizar arreglo unidimensional)
+c) Implementación de todas las operaciones.
+"""
 from cola import Cola
 from pila import Pila
 import numpy as np
@@ -18,6 +25,7 @@ class Grafo:
         self.__pesos = np.full((6,6),1)
         for arista in aristas:
             self.__matrizA[arista[0]][arista[1]] = 1
+            self.__matrizA[arista[1]][arista[0]] = 1
 
     def getPeso(self,vertice1,vertice2):
         return self.__pesos[vertice1][vertice2]
@@ -30,6 +38,7 @@ class Grafo:
 
     def adyacentes(self,vertice):
         arreglo= []
+        
         for i in range(len(self.__matrizA)):
             if self.__matrizA[vertice][i] == 1:
                 arreglo.append(i)
@@ -130,31 +139,12 @@ class Grafo:
                     Tabla[w].camino = v
         return Tabla
 
-    def verticeSumidero(self,vertice,vertices):
-        esSumidero = False
-        i = 0
-        while i < len(vertices) and not esSumidero:
-            if vertice in self.adyacentes(i):
-                esSumidero = True
-            i += 1
-        return len(self.adyacentes(vertice)) == 0 and esSumidero
-    
-    def verticeFuente(self,vertice,vertices):
-        esFuente = True
-        i = 0
-        while i < len(vertices) and esFuente:
-            if vertice in self.adyacentes(i):
-                esFuente = False
-            i += 1
-        return len(self.adyacentes(vertice)) > 0 and esFuente
-
     def grafico(self,vertices, adyacencia):
         G = nx.Graph()
         G.add_nodes_from(vertices)
         G.add_edges_from(adyacencia)
         nx.draw(G, with_labels=True)
         plt.show()
-
 if __name__ == '__main__':
     vertices = [0,1,2,3,4,5]
     aristas = [[0,1],[2,5],[2,3],[3,4],[4,5],[1,2]]
@@ -170,10 +160,9 @@ if __name__ == '__main__':
 
     print('El camino entre 0 y 5 es: ',grafo.camino(0,5))
     # Salida: El camino más corto entre 0 y 5 es:  [0, 1, 2, 3, 5]
-    print('Es conexo? ',grafo.esConexo(vertices))
-    print('El camino minimo entre 0 y 5: ',grafo.caminoMinimo(0,5,vertices))
 
-    print('Es sumidero? ',grafo.verticeSumidero(5,vertices))
-    print('Es fuente? ',grafo.verticeFuente(0,vertices))
+    print('Es conexo? ',grafo.esConexo(vertices))
+    print('Es asiclico? ',grafo.Aciclico())
+    print('El camino minimo entre 0 y 5: ',grafo.caminoMinimo(0,5,vertices))
 
     grafo.grafico(vertices,aristas)
