@@ -21,7 +21,8 @@ class Menu:
             '\tk- Mostar preOrden\n'
             '\tl- Mostar postOrden\n'
             '\tm- Mostrar cantidad de hojas\n'
-            '\tn- Mostrar antecesores de un nodo\n')
+            '\tn- Mostrar antecesores de un nodo\n'
+            '\to- Sucesores de un nodo\n')
     
     def opcionA(self):
         self.__arbol.insertar(12)
@@ -134,6 +135,13 @@ class Menu:
             if arreglo[i] != None:
                 print(arreglo[i],end=" ")
         print('\n')
+    
+    def opcionO(self):
+        nodo =self.__arbol.buscar(16,self.__arbol.getRaiz())
+        if  nodo != False:
+            self.__arbol.sucesores(nodo)
+        else:
+            print('No se encontro el nodo')
 
     def menuOpciones(self,opcion):
         if opcion == 'a':
@@ -164,5 +172,7 @@ class Menu:
             self.opcionM()
         elif opcion == 'n':
             self.opcionN()
+        elif opcion == 'o':
+            self.opcionO()
         else:
             print('Opcion no valida'.center(30, '-'))

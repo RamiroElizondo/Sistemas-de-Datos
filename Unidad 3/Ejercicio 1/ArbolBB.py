@@ -227,3 +227,7 @@ class ArbolBB:
                     return self.antecesores(nodo.getDerecha(), valor, arreglo,indice)
         else:
             return arreglo
+    
+    def sucesores(self,nodo):
+        self.inOrden(nodo)
+        print('\n')

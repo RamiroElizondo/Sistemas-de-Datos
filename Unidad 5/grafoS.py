@@ -152,11 +152,11 @@ if __name__ == '__main__':
     grafo.mostrar()
 
     vertice = int(input('Ingrese un Vertice: '))
-    print('Los vertices adyacentes a',vertice,'son: ')
-    print(grafo.adyacentes(vertice))
-
-    print('Recorrido en anchura: ',grafo.REA(0))
-    print('Recorrido en profundidad: ',grafo.REP(0))
+    if vertice in vertices:
+        print('Los vertices adyacentes a',vertice,'son: ')
+        print(grafo.adyacentes(vertice))
+        print('Recorrido en anchura: ',grafo.REA(0))
+        print('Recorrido en profundidad: ',grafo.REP(0))
 
     print('El camino entre 0 y 5 es: ',grafo.camino(0,5))
     # Salida: El camino más corto entre 0 y 5 es:  [0, 1, 2, 3, 5]

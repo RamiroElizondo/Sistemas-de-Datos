@@ -24,7 +24,9 @@ class HashingDA:
 
     def cuadradoMedio(self, valor):
         valor = valor ** 2
-        return self.metodoDiv(valor)
+        valor = self.metodoDiv(valor)
+        valor = self.metodoDiv(valor)
+        return valor
 
     def Alfanumerio(self,cadena):
         total=0
@@ -34,7 +36,7 @@ class HashingDA:
         return self.metodoDiv(total)
     
     def insertar(self,valor):
-        indice = self.metodoDiv(valor)
+        indice = self.cuadradoMedio(valor)
         print(indice)
         if self.__arreglo[indice] == None:
             self.__arreglo[indice] = valor

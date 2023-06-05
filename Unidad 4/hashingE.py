@@ -54,6 +54,28 @@ class Hashing:
             total += digito
         return self.metodoDiv(total)
 
+    def cuadrado_medio(self, key):
+        square = key ** 2
+        print('Cuadrado ',square)
+        square_str = str(square)
+        mid_digits = square_str[len(square_str)//2-1:(len(square_str)//2+1)+1]
+        print('Medios',mid_digits)
+        index = int(mid_digits) % self.__dimension
+        return index
+
+    def insertar2(self, valor):
+        indice = self.cuadrado_medio(valor)
+        print(indice)
+
+        nodo = Nodo(valor)
+        if self.__arreglo[indice] == None:
+            self.__arreglo[indice] = nodo
+        else:
+            nodo.setSiguiente(self.__arreglo[indice])
+            self.__arreglo[indice] = nodo
+
+
+
     def insertar(self,valor,metodo):
         if metodo == 1:
             indice = self.metodoDiv(valor)
@@ -96,7 +118,8 @@ class Hashing:
                     print('El elemento si esta')
                     bandera = True
                 actual = actual.getSiguiente()
-    
+    def getArreglo(self):
+        return self.__arreglo
 def primo(valor):
     bandera = True
     for i in range(2,valor):
@@ -114,7 +137,17 @@ if __name__ == '__main__':
     tam//=2
     if primo(tam) == False:
         tam = primoProximo(tam)
+    print('Tamaño',tam)
+
+    # Tamaño ingresado: 461, luego queda en 233
+    # Para la primer clave, los numeros centrales son 855
+    # Para la segunda clave, los numeros centrales son 125 
+
     hash = Hashing(tam)
-    hash.insertar(25453,1)
-    hash.insertar(81235,1)
-    hash.buscar(25453,1)
+    hash.insertar2(25453)
+    hash.insertar2(81235)
+    arreglo = hash.getArreglo()
+    for i in range(len(arreglo)):
+        if arreglo[i] != None:
+            print(i,arreglo[i].getValor())
+    #hash.buscar(25453,1)
