@@ -98,10 +98,13 @@ class Menu:
         arreglo = [] * 10
         desde = int(input('Ingrese el valor del nodo desde: '))
         hasta = int(input('Ingrese el valor del nodo hasta: '))
-
+        
         desde = self.__arbol.buscar(desde,self.__arbol.getRaiz())
         hasta = self.__arbol.buscar(hasta,self.__arbol.getRaiz())
-        if self.__arbol.hijo(desde, hasta):
+
+
+        if self.__arbol.hijo(hasta,desde):
+            print('Es hijo')
             arreglo = self.__arbol.camino(desde,hasta,arreglo)
             print(arreglo)
         else:
@@ -130,7 +133,7 @@ class Menu:
 
     def opcionN(self):
         arreglo = np.full(10,None)
-        arreglo = self.__arbol.antecesores(self.__arbol.getRaiz(),13,arreglo)
+        arreglo = self.__arbol.antecesores(self.__arbol.getRaiz(),3,arreglo)
         for i in range(len(arreglo)):
             if arreglo[i] != None:
                 print(arreglo[i],end=" ")

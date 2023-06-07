@@ -51,9 +51,28 @@ class HashingB:
             self.__contador[indice3] += 1
         else:
             self.__arreglo[indice1][indice2] = valor
-        self.__contador[indice1] += 1
+            self.__contador[indice1] += 1
     
-    
+    def buscar(self,valor):
+        indice1 = self.metodoDiv(valor)
+        indice2 = self.__contador[indice1]
+        bandera = False
+        if indice2 >= 4:
+            i = self.__dimension-2
+            j = 0
+            while i < self.__dimension and bandera == False:
+                while j < 4 and bandera == False:
+                    if self.__arreglo[i][j] == valor:
+                        bandera = True  # El valor fue encontrado en la zona de overflow
+                    j += 1
+                j = 0
+                i += 1
+        else:
+            if self.__arreglo[indice1][indice2] == valor:
+                bandera = True
+        return bandera
+
+
 def primo(valor):
     bandera = True
     for i in range(2,valor):
@@ -73,16 +92,17 @@ if __name__ == '__main__':
         tam = primoProximo(tam)
     
     hash = HashingB(tam)
+    hash.insertar(81235)
+    hash.insertar(81235)
+    hash.insertar(81235)
+    hash.insertar(81235)
     hash.insertar(25453)
-    hash.insertar(81235)
-    hash.insertar(81235)
-    hash.insertar(81235)
-    hash.insertar(81235)
     
     arreglo = hash.getArreglo()
     contadores = hash.getContadores()
     print(arreglo)
     print(contadores)
+    print(hash.buscar(25453))
     """for i in range(len(arreglo)-2):
         
         for j in range(4):

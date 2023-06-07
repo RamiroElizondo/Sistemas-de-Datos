@@ -37,18 +37,36 @@ class HashingDA:
     
     def insertar(self,valor):
         indice = self.cuadradoMedio(valor)
-        print(indice)
+        contador = 0
         if self.__arreglo[indice] == None:
             self.__arreglo[indice] = valor
         else:
             bandera = False
-            while bandera == False:
+            while bandera == False and contador < self.__dimension:
                 indice += 1
                 if indice == self.__dimension:
                     indice = 0
                 if self.__arreglo[indice] == None:
                     bandera = True
-            self.__arreglo[indice] = valor
+                contador += 1
+            if contador == self.__dimension:
+                print('Arreglo lleno')
+            else:
+                self.__arreglo[indice] = valor
+
+    def buscar(self,valor):
+        indice = self.cuadradoMedio(valor)
+        bandera = False
+        if self.__arreglo[indice] == valor:
+            bandera = True
+        else:
+            while bandera == False:
+                indice += 1
+                if indice == self.__dimension:
+                    indice = 0
+                if self.__arreglo[indice] == valor:
+                    bandera = True
+        return bandera
 
     def getArreglo(self):
         return self.__arreglo
@@ -75,10 +93,18 @@ if __name__ == '__main__':
     hash.insertar(25453)
     hash.insertar(81235)
     hash.insertar(39000)
-    hash.insertar(81235)
+    hash.insertar(81234)
     hash.insertar(81235)
     hash.insertar(39000)
     hash.insertar(25453)
-    
+    hash.insertar(81234)
+    hash.insertar(81235)
+    hash.insertar(39000)
+    hash.insertar(25453)
+
+    hash.insertar(25453)
+
+
     print(hash.getArreglo())
+    print(hash.buscar(81234))
          

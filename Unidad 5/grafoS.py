@@ -38,7 +38,6 @@ class Grafo:
 
     def adyacentes(self,vertice):
         arreglo= []
-        
         for i in range(len(self.__matrizA)):
             if self.__matrizA[vertice][i] == 1:
                 arreglo.append(i)

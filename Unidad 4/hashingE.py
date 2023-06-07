@@ -28,6 +28,7 @@ class Hashing:
         self.__cantPreguntas = 0
     def getArreglo(self):
         return self.__arreglo
+
     def metodoDiv(self, valor):
         valor = valor % self.__dimension
         return valor
@@ -43,9 +44,12 @@ class Hashing:
             valor = valor // 100
         return self.metodoDiv(suma)
 
-    def cuadradoMedio(self, valor):
-        valor = valor ** 2
-        return self.metodoDiv(valor)
+    def cuadrado_medio(self, valor):
+        potencia = valor ** 2
+        cadena = str(potencia)
+        medios = cadena[len(cadena)//2-1:(len(cadena)//2+1)+1]
+        indice = int(medios) % self.__dimension
+        return indice
 
     def Alfanumerio(self,cadena):
         total=0
@@ -54,17 +58,8 @@ class Hashing:
             total += digito
         return self.metodoDiv(total)
 
-    def cuadrado_medio(self, key):
-        square = key ** 2
-        print('Cuadrado ',square)
-        square_str = str(square)
-        mid_digits = square_str[len(square_str)//2-1:(len(square_str)//2+1)+1]
-        print('Medios',mid_digits)
-        index = int(mid_digits) % self.__dimension
-        return index
-
     def insertar2(self, valor):
-        indice = self.cuadrado_medio(valor)
+        indice = self.plegado(valor)
         print(indice)
 
         nodo = Nodo(valor)
@@ -74,19 +69,8 @@ class Hashing:
             nodo.setSiguiente(self.__arreglo[indice])
             self.__arreglo[indice] = nodo
 
-
-
-    def insertar(self,valor,metodo):
-        if metodo == 1:
-            indice = self.metodoDiv(valor)
-        elif metodo == 2:
-            indice = self.extraccion(valor)
-        elif metodo == 3:
-            indice = self.plegado(valor)
-        elif metodo == 4:
-            indice = self.cuadradoMedio(valor)
-        else:
-            indice = self.Alfanumerio(valor)
+    def insertar(self,valor):
+        indice = self.metodoDiv(valor)
         nodo = Nodo(valor)
         if self.__arreglo[indice] == None:
             self.__arreglo[indice] = nodo
@@ -94,18 +78,8 @@ class Hashing:
             nodo.setSiguiente(self.__arreglo[indice])
             self.__arreglo[indice] = nodo
 
-    def buscar(self,valor,metodo):
-        if metodo == 1:
-            indice = self.metodoDiv(valor)
-        elif metodo == 2:
-            indice = self.extraccion(valor)
-        elif metodo == 3:
-            indice = self.plegado(valor)
-        elif metodo == 4:
-            indice = self.cuadradoMedio(valor)
-        else:
-            indice = self.Alfanumerio(valor)
-
+    def buscar(self,valor):
+        indice = self.plegado(valor)
         actual = self.__arreglo[indice]
         bandera = False
         if actual is None:
@@ -118,6 +92,7 @@ class Hashing:
                     print('El elemento si esta')
                     bandera = True
                 actual = actual.getSiguiente()
+
     def getArreglo(self):
         return self.__arreglo
 def primo(valor):
@@ -146,6 +121,7 @@ if __name__ == '__main__':
     hash = Hashing(tam)
     hash.insertar2(25453)
     hash.insertar2(81235)
+    hash.buscar(25453)
     arreglo = hash.getArreglo()
     for i in range(len(arreglo)):
         if arreglo[i] != None:

@@ -3,6 +3,7 @@ import numpy as np
 
 class Nodo:
     __valor: int
+    __contador: int
     __izquierda: Nodo | None
     __derecha: Nodo | None
 
@@ -65,8 +66,7 @@ class ArbolBB:
             print('El elemento ya esta en la lista')
             valor = nodoActual.getContador()
             nodoActual.setContador(valor+1)
-            return 
-        if nodo.getValor() < nodoActual.getValor():
+        elif nodo.getValor() < nodoActual.getValor():
             if nodoActual.getIzquierda() is None:
                 nodoActual.setIzquierda(nodo)
             else:
@@ -93,7 +93,6 @@ class ArbolBB:
             if nodoActual.getContador() > 1:
                 valor = nodoActual.getContador()
                 nodoActual.setContador(valor-1)
-
             elif self.hoja(nodoActual): #Si es hoja
                 if izquierda: 
                     anterior.setIzquierda(None) #Si el nodo hoja es hijo izquierdo
@@ -139,12 +138,10 @@ class ArbolBB:
             return contador
         elif nodo.getValor() < nodoActual.getValor():
             if nodoActual.getIzquierda() != None:
-                contador += 1
-                return self.nivel(nodo,nodoActual.getIzquierda(),contador)
-        elif nodo.getValor() > nodoActual.getValor():
+                return self.nivel(nodo,nodoActual.getIzquierda(),contador+1)
+        else:
             if nodoActual.getDerecha() != None:
-                contador += 1
-                return self.nivel(nodo,nodoActual.getDerecha(),contador)
+                return self.nivel(nodo,nodoActual.getDerecha(),contador+1)
 
     def hoja(self,nodo):
         if nodo.getDerecha() == None and nodo.getIzquierda() == None:
@@ -225,8 +222,8 @@ class ArbolBB:
                     return self.antecesores(nodo.getIzquierda(), valor, arreglo,indice)
                 else:
                     return self.antecesores(nodo.getDerecha(), valor, arreglo,indice)
-        else:
-            return arreglo
+        
+        return arreglo
     
     def sucesores(self,nodo):
         self.inOrden(nodo)
