@@ -228,3 +228,10 @@ class ArbolBB:
     def sucesores(self,nodo):
         self.inOrden(nodo)
         print('\n')
+    
+    def minimo(self,nodoActual,minimo=99999):
+        if nodoActual.getIzquierda() != None:
+            return self.minimo(nodoActual.getIzquierda())
+        else:
+            return nodoActual.getValor()
+        

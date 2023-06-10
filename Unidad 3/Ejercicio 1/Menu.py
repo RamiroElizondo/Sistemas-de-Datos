@@ -145,6 +145,7 @@ class Menu:
             self.__arbol.sucesores(nodo)
         else:
             print('No se encontro el nodo')
+        print(self.__arbol.minimo(self.__arbol.getRaiz()))
 
     def menuOpciones(self,opcion):
         if opcion == 'a':
